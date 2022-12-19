@@ -14,24 +14,12 @@ async def start(message: types.Message):
     if message.chat.type == "private":
         if not db.user_exists(message.from_user.id):
             db.add_user(message.from_user.id)
-            await bot.send_message(message.from_user.id, "Введите имя")
-            await bot.send_message(message.from_user.id, "Введите email")
+            await bot.send_message(message.from_user.id, "Вы успешно зарегестрировались")
         else:
-            await bot.send_message(message.from_user.id, "Вы уже зарегестрированы", reply_markup=nav.mainMenu)
+            await bot.send_message(message.from_user.id, "Вы уже зарегестрированы, ждите рассылки от вашего любимейшего университета )")
 
 
-@dp.message_handler()
-async def bot_message(message: types.Message):
-    if message.chat.type == 'private':
-        if message.text == 'Профиль':
-            pass
-        else:
-            if db.get_signup(message.from_user.id) == "setname":
-                if(len(message.text) > 50):
-                    await bot.send_message(message.from_user.id, "Имя не может превышать 50 символов")
-                else:
-                    db.set_name(message.from_user.id, message.text)
-                    db.set_signup(message.from_user.id, "done", "Вы успешно зарегистрировались")
+
 
 
 @dp.message_handler(commands = ['sendall'])
